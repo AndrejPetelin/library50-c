@@ -1,10 +1,10 @@
-/****************************************************************************
- * CS50 Library 6
- * https://manual.cs50.net/library/
+/**
+ * CS50 Library 7
+ * https://manual.cs50.net/library/c/
  *
  * Based on Eric Roberts' genlib.c and simpio.c.
  *
- * Copyright (c) 2013,
+ * Copyright (c) 2015,
  * Glenn Holloway <holloway@eecs.harvard.edu>
  * David J. Malan <malan@harvard.edu>
  * All rights reserved.
@@ -36,7 +36,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ***************************************************************************/
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,7 +47,7 @@
 /**
  * Reads a line of text from standard input and returns the equivalent
  * char; if text does not represent a char, user is prompted to retry.
- * Leading and trailing whitespace is ignored.  If line can't be read,
+ * Leading and trailing whitespace is ignored. If line can't be read,
  * returns CHAR_MAX.
  */
 char GetChar(void)
@@ -81,8 +81,8 @@ char GetChar(void)
 /**
  * Reads a line of text from standard input and returns the equivalent
  * double as precisely as possible; if text does not represent a
- * double, user is prompted to retry.  Leading and trailing whitespace
- * is ignored.  For simplicity, overflow and underflow are not detected.
+ * double, user is prompted to retry. Leading and trailing whitespace
+ * is ignored. For simplicity, overflow and underflow are not detected.
  * If line can't be read, returns DBL_MAX.
  */
 double GetDouble(void)
@@ -116,8 +116,8 @@ double GetDouble(void)
 /**
  * Reads a line of text from standard input and returns the equivalent
  * float as precisely as possible; if text does not represent a float,
- * user is prompted to retry.  Leading and trailing whitespace is ignored.
- * For simplicity, overflow and underflow are not detected.  If line can't
+ * user is prompted to retry. Leading and trailing whitespace is ignored.
+ * For simplicity, overflow and underflow are not detected. If line can't
  * be read, returns FLT_MAX.
  */
 float GetFloat(void)
@@ -151,9 +151,9 @@ float GetFloat(void)
 /**
  * Reads a line of text from standard input and returns it as an
  * int in the range of [-2^31 + 1, 2^31 - 2], if possible; if text
- * does not represent such an int, user is prompted to retry.  Leading
- * and trailing whitespace is ignored.  For simplicity, overflow is not
- * detected.  If line can't be read, returns INT_MAX.
+ * does not represent such an int, user is prompted to retry. Leading
+ * and trailing whitespace is ignored. For simplicity, overflow is not
+ * detected. If line can't be read, returns INT_MAX.
  */
 int GetInt(void)
 {
@@ -187,8 +187,8 @@ int GetInt(void)
  * Reads a line of text from standard input and returns an equivalent
  * long long in the range [-2^63 + 1, 2^63 - 2], if possible; if text
  * does not represent such a long long, user is prompted to retry.
- * Leading and trailing whitespace is ignored.  For simplicity, overflow
- * is not detected.  If line can't be read, returns LLONG_MAX.
+ * Leading and trailing whitespace is ignored. For simplicity, overflow
+ * is not detected. If line can't be read, returns LLONG_MAX.
  */
 long long GetLongLong(void)
 {
@@ -220,10 +220,10 @@ long long GetLongLong(void)
 
 /**
  * Reads a line of text from standard input and returns it as a
- * string (char*), sans trailing newline character.  (Ergo, if
- * user inputs only "\n", returns "" not NULL.)  Returns NULL
- * upon error or no input whatsoever (i.e., just EOF).  Leading
- * and trailing whitespace is not ignored.  Stores string on heap
+ * string (char*), sans trailing newline character. (Ergo, if
+ * user inputs only "\n", returns "" not NULL.) Returns NULL
+ * upon error or no input whatsoever (i.e., just EOF). Leading
+ * and trailing whitespace is not ignored. Stores string on heap
  * (via malloc); memory must be freed by caller to avoid leak.
  */
 string GetString(void)
@@ -282,9 +282,12 @@ string GetString(void)
     }
 
     // minimize buffer
-    string minimal = malloc((n + 1) * sizeof(char));
-    strncpy(minimal, buffer, n);
+    string minimal = realloc(buffer, (n + 1) * sizeof(char));
     free(buffer);
+    if (minimal == NULL)
+    {
+        return NULL;
+    }
 
     // terminate string
     minimal[n] = '\0';
