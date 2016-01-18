@@ -38,7 +38,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ***************************************************************************/
 
+/**
+* supress Microsoft compiler warning about sscanf that prevents compilation
+* with default settings on Microsoft Visual Studio due to their preference
+* for the non-standard sscanf_s etc. Note that 1500 means Visual Studio 2008
+*/
+#if (_MSC_VER >= 1500)
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <stdio.h>
+
+#if (_MSC_VER >= 1500)
+#undef _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 
